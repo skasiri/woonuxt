@@ -49,7 +49,8 @@ useHead({
 <style lang="postcss">
 html,
 body {
-  @apply bg-gray-100 text-gray-900;
+  background-color: #060b2f;
+  @apply text-gray-900;
   scroll-behavior: smooth;
 }
 
