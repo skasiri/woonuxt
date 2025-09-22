@@ -23,12 +23,12 @@ const radioClicked = (rating: string): void => {
 
 <template>
   <div>
-    <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
+    <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center text-[#C1C6E3]" @click="isOpen = !isOpen">
       <span>{{ $t('messages.shop.rating') }}</span>
       <Icon v-show="isOpen" name="ion:chevron-up-outline" />
       <Icon v-show="!isOpen" name="ion:chevron-down-outline" />
     </div>
-    <div v-if="isOpen" class="mt-3 text-sm grid text-gray-500 gap-3">
+    <div v-if="isOpen" class="mt-3 text-sm grid text-[#C1C6E3] gap-3">
       <div class="cursor-pointer flex gap-2 items-center">
         <input id="star-five" v-model="selectedTerms" type="radio" value="5" aria-label="5 stars" @click="radioClicked('5')" />
         <label class="flex items-center" for="star-five">
