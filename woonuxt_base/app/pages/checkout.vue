@@ -5,6 +5,7 @@ import type { Stripe, StripeElements, CreateSourceData, StripeCardElement } from
 const { t } = useI18n();
 const { query } = useRoute();
 const { cart, isUpdatingCart, paymentGateways } = useCart();
+console.log('paymentGateways', paymentGateways.value);
 const { customer, viewer } = useAuth();
 const { orderInput, isProcessingOrder, processCheckout } = useCheckout();
 const runtimeConfig = useRuntimeConfig();
@@ -85,7 +86,7 @@ useSeoMeta({
         <div class="grid w-full max-w-2xl gap-8 checkout-form md:flex-1">
           <!-- Customer details -->
           <div v-if="!viewer && customer.billing">
-            <h2 class="w-full mb-2 text-2xl font-semibold leading-none">Contact Information</h2>
+            <h2 class="w-full mb-2 text-2xl font-semibold leading-none text-primary">Contact Information</h2>
             <p class="mt-1 text-sm text-gray-500">Already have an account? <a href="/my-account" class="text-primary text-semibold">Log in</a>.</p>
             <div class="w-full mt-4">
               <label for="email">{{ $t('messages.billing.email') }}</label>
@@ -120,7 +121,7 @@ useSeoMeta({
           </div>
 
           <div>
-            <h2 class="w-full mb-3 text-2xl font-semibold">{{ $t('messages.billing.billingDetails') }}</h2>
+            <h2 class="w-full mb-3 text-2xl font-semibold text-primary">{{ $t('messages.billing.billingDetails') }}</h2>
             <BillingDetails v-model="customer.billing" />
           </div>
 
@@ -131,27 +132,27 @@ useSeoMeta({
 
           <Transition name="scale-y" mode="out-in">
             <div v-if="orderInput.shipToDifferentAddress">
-              <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.general.shippingDetails') }}</h2>
+              <h2 class="mb-4 text-xl font-semibold text-primary">{{ $t('messages.general.shippingDetails') }}</h2>
               <ShippingDetails v-model="customer.shipping" />
             </div>
           </Transition>
 
           <!-- Shipping methods -->
           <div v-if="cart.availableShippingMethods.length">
-            <h3 class="mb-4 text-xl font-semibold">{{ $t('messages.general.shippingSelect') }}</h3>
+            <h3 class="mb-4 text-xl font-semibold text-primary">{{ $t('messages.general.shippingSelect') }}</h3>
             <ShippingOptions :options="cart.availableShippingMethods[0].rates" :active-option="cart.chosenShippingMethods[0]" />
           </div>
 
           <!-- Pay methods -->
           <div v-if="paymentGateways?.nodes.length" class="mt-2 col-span-full">
-            <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.billing.paymentOptions') }}</h2>
+            <h2 class="mb-4 text-xl font-semibold text-primary">{{ $t('messages.billing.paymentOptions') }}</h2>
             <PaymentOptions v-model="orderInput.paymentMethod" class="mb-4" :paymentGateways />
             <StripeElement v-if="stripe" v-show="orderInput.paymentMethod.id == 'stripe'" :stripe @updateElement="handleStripeElement" />
           </div>
 
           <!-- Order note -->
           <div>
-            <h2 class="mb-4 text-xl font-semibold">{{ $t('messages.shop.orderNote') }} ({{ $t('messages.general.optional') }})</h2>
+            <h2 class="mb-4 text-xl font-semibold text-primary">{{ $t('messages.shop.orderNote') }} ({{ $t('messages.general.optional') }})</h2>
             <textarea
               id="order-note"
               v-model="orderInput.customerNote"
@@ -192,7 +193,7 @@ useSeoMeta({
 }
 
 .checkout-form label {
-  @apply my-1.5 text-xs text-gray-600 uppercase;
+  @apply my-1.5 text-xs text-primary uppercase;
 }
 
 .checkout-form .StripeElement {
