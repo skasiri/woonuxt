@@ -24,18 +24,24 @@ useSeoMeta({
   <main class="container py-8 xl:max-w-5xl" v-if="post">
     <article class="prose prose-invert max-w-none">
       <header class="mb-6">
-        <h1 class="text-3xl font-semibold text-[#C1C6E3]" v-html="post.title" />
-        <div class="mt-2 text-sm text-[#A3ABD9]" v-if="post.date">
-          {{ new Date(post.date).toLocaleDateString() }}
+        <div class="flex flex-col gap-4 md:flex-row md:items-center">
+          <div class="md:flex-1">
+            <h1 class="text-3xl font-semibold text-white" v-html="post.title" />
+            <div class="mt-4 text-[#FFDEDE]" v-if="post.excerpt" v-html="post.excerpt" />
+            <div class="mt-2 text-sm text-[#A3ABD9]" v-if="post.date">
+              {{ new Date(post.date).toLocaleDateString() }}
+            </div>
+          </div>
+
+          <NuxtImg
+            v-if="post.featuredImage?.node?.sourceUrl"
+            class="rounded-md md:shrink-0 w-[200px] h-[200px] object-cover"
+            :src="post.featuredImage.node.sourceUrl"
+            :alt="post.featuredImage.node.altText || ''"
+            :width="200"
+            :height="200"
+            sizes="200px" />
         </div>
-        <NuxtImg
-          v-if="post.featuredImage?.node?.sourceUrl"
-          class="mt-6 rounded-lg"
-          :src="post.featuredImage.node.sourceUrl"
-          :alt="post.featuredImage.node.altText || ''"
-          :width="post.featuredImage.node.mediaDetails?.width || 1200"
-          :height="post.featuredImage.node.mediaDetails?.height || 630"
-          sizes="100vw sm:800px lg:1200px" />
       </header>
 
       <div v-html="post.content" />
