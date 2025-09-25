@@ -65,8 +65,8 @@ async function addComment() {
 
 <template>
   <div>
-    <h4 v-if="reviews.edges.length" class="font-semibold text-2xl text-gray-900">{{ $t('messages.shop.customerReviews') }}</h4>
-    <h4 v-else class="font-semibold text-2xl text-gray-900">{{ $t('messages.shop.noReviews') }}</h4>
+    <h4 v-if="reviews.edges.length" class="font-semibold text-2xl text-stone">{{ $t('messages.shop.customerReviews') }}</h4>
+    <h4 v-else class="font-semibold text-2xl text-stone-50">{{ $t('messages.shop.noReviews') }}</h4>
     <div v-if="reviews.edges.length" class="my-2">
       <StarRating :rating="reviews.averageRating" :hide-count="true" class="text-sm mr-2" />
       <span class="text-sm"> {{ $t('messages.general.basedOn') }} {{ reviews.edges.length }} {{ $t('messages.shop.reviews') }}</span>
@@ -83,14 +83,14 @@ async function addComment() {
         </div>
       </div>
     </div>
-    <div class="mt-10 text-xl mb-2 text-gray-900">Share your thoughts</div>
+    <div class="mt-10 text-xl mb-2 text-stone-50">Share your thoughts</div>
     <div class="text-sm mb-4">If you have used this product, we would love to hear about your experience.</div>
     <button @click="show = !show" class="border rounded-lg text-center w-full p-2">
       {{ show ? $t('messages.shop.close') : $t('messages.shop.writeReview') }}
     </button>
     <transition class="ease-in-out transform transition-all" name="scale-y">
       <form v-if="show" @submit.prevent="addComment" class="writeReview">
-        <div class="w-full text-gray-500">
+        <div class="w-full text-stone-500">
           <div class="p-5 mt-3 grid gap-2 border rounded-lg">
             <div class="block text-center mb-1.5">
               <label class="text-center text-sm block relative m-auto">{{ $t('messages.shop.rateReview') }} <span class="text-red-500">*</span></label>
