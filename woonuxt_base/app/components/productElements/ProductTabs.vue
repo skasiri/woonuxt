@@ -19,7 +19,7 @@ const show = ref(initialTab);
       </button>
     </nav>
     <div class="tab-contents">
-      <div v-if="show === 0 && product.description" class="font-light mt-8 prose text-[#C1C6E3]" v-html="product.description" />
+      <div v-if="show === 0 && product.description" class="font-light mt-8 prose prose-invert text-[#C1C6E3]" v-html="product.description" />
       <ProductReviews v-if="show === 1" :product="product" />
     </div>
   </div>
@@ -34,6 +34,11 @@ const show = ref(initialTab);
 
 .tabs button.active {
   @apply border-primary;
+  color: #c1c6e3;
+}
+
+.tab-contents h2,
+.tab-contents h3 {
   color: #c1c6e3;
 }
 </style>
