@@ -126,14 +126,14 @@ const disabledAddToCart = computed(() => {
             </div>
           </div>
 
-          <div class="mb-8 font-light prose text-[#C1C6E3]" v-html="product.shortDescription || product.description" />
+          <div class="mb-8 font-light prose prose-invert text-[#C1C6E3]" v-html="product.shortDescription || product.description" />
 
           <hr />
 
           <form @submit.prevent="addToCart(selectProductInput)">
             <AttributeSelections
               v-if="isVariableProduct && product.attributes && product.variations"
-              class="mt-4 mb-8"
+              class="mt-4 mb-8 text-stone-50"
               :attributes="product.attributes.nodes"
               :defaultAttributes="product.defaultAttributes"
               :variations="product.variations.nodes"
