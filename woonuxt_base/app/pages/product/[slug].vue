@@ -13,7 +13,7 @@ if (!data.value?.product) {
   throw showError({ statusCode: 404, statusMessage: t('messages.shop.productNotFound') });
 }
 
-console.log('data', data.value);
+// console.log('data', data.value);
 
 const product = ref<Product>(data?.value?.product);
 const quantity = ref<number>(1);
