@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig();
+const localePath = useLocalePath();
 
 const { product } = defineProps<{ product: Product }>();
 
@@ -7,10 +8,10 @@ const { product } = defineProps<{ product: Product }>();
 const productCategoryPermallink = runtimeConfig?.public?.PRODUCT_CATEGORY_PERMALINK || '/product-category/';
 const primaryCategory = computed(() => product.productCategories?.nodes[0]);
 const format = computed(() => [
-  { name: 'Products', slug: '/products' },
+  { name: 'Products', slug: localePath('/products') },
   {
     name: primaryCategory.value?.name,
-    slug: `${String(productCategoryPermallink)}${primaryCategory.value?.slug}`,
+    slug: localePath(`${String(productCategoryPermallink)}${primaryCategory.value?.slug}`),
   },
   { name: product.name },
 ]);
@@ -19,11 +20,11 @@ const format = computed(() => [
 <template>
   <div class="flex text-sm leading-none text-[#C1C6E3] gap-1 items-center">
     <span>
-      <NuxtLink to="/" class="hover:text-primary">{{ $t('messages.general.home') }}</NuxtLink>
+      <NuxtLink :to="$localePath('/')" class="hover:text-primary">{{ $t('messages.general.home') }}</NuxtLink>
       <span> /</span>
     </span>
     <span v-for="(link, i) in format" :key="link.name || i">
-      <NuxtLink v-if="link.slug" :to="decodeURIComponent(link.slug)" class="hover:text-primary">{{ link.name }}</NuxtLink>
+      <NuxtLink v-if="link.slug" :to="$localePath(decodeURIComponent(link.slug))" class="hover:text-primary">{{ link.name }}</NuxtLink>
       <span v-else class="text-[#C1C6E3]">{{ link.name }}</span>
       <span v-if="i + 1 < format.length"> /</span>
     </span>
