@@ -70,6 +70,7 @@ export default defineNuxtConfig({
       { code: 'it_IT', file: 'it-IT.json', name: 'Italiano 🇮🇹' },
       { code: 'pt_BR', file: 'pt-BR.json', name: 'Português 🇧🇷' },
       { code: 'ru_RU', file: 'ru-RU.json', name: 'Русский 🇷🇺' },
+      { code: 'ar_SA', file: 'ar-SA.json', name: 'العربية 🇸🇦' },
       { code: 'fa_IR', file: 'fa-IR.json', name: 'فارسی 🇮🇷' },
     ],
     langDir: 'locales',
