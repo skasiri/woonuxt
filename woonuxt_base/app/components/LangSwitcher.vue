@@ -1,10 +1,11 @@
 <script setup>
-const { locales, locale, setLocaleCookie } = useI18n();
+const { locales, locale, setLocale, setLocaleCookie } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
 const router = useRouter();
 
 function onChange(event) {
   const newCode = event.target.value;
+  setLocale(newCode);
   setLocaleCookie(newCode);
   const path = switchLocalePath(newCode);
   router.push(path);

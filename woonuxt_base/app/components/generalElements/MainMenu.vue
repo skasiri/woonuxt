@@ -4,11 +4,11 @@ const { wishlistLink } = useAuth();
 
 <template>
   <nav>
-    <NuxtLink to="/">{{ $t('messages.general.home') }}</NuxtLink>
-    <NuxtLink to="/products">{{ $t('messages.general.allProducts') }}</NuxtLink>
-    <NuxtLink to="/categories">{{ $t('messages.shop.category', 2) }}</NuxtLink>
-    <NuxtLink to="/contact">{{ $t('messages.general.contact') }}</NuxtLink>
-    <NuxtLink class="lg:hidden" :to="wishlistLink" :prefetch="false">Wishlist</NuxtLink>
-    <NuxtLink class="lg:hidden" to="/my-account" :prefetch="false">My Account</NuxtLink>
+    <NuxtLink :to="$localePath('/')">{{ $t('messages.general.home') }}</NuxtLink>
+    <NuxtLink :to="$localePath('/products')">{{ $t('messages.general.allProducts') }}</NuxtLink>
+    <NuxtLink :to="$localePath('/categories')">{{ $t('messages.shop.category', 2) }}</NuxtLink>
+    <NuxtLink :to="$localePath('/contact')">{{ $t('messages.general.contact') }}</NuxtLink>
+    <NuxtLink class="lg:hidden" :to="$localePath(wishlistLink)" :prefetch="false">{{ $t('messages.general.wishlist') }}</NuxtLink>
+    <NuxtLink class="lg:hidden" :to="$localePath('/my-account')" :prefetch="false">{{ $t('messages.general.myAccount') }}</NuxtLink>
   </nav>
 </template>

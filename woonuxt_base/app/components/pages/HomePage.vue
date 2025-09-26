@@ -34,7 +34,7 @@ useSeoMeta({
     <section class="container my-16">
       <div class="flex items-end justify-between text-primary">
         <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.shopByCategory') }}</h2>
-        <NuxtLink class="text-primary" to="/categories">{{ $t('messages.general.viewAll') }}</NuxtLink>
+        <NuxtLink class="text-primary" :to="$localePath('/categories')">{{ $t('messages.general.viewAll') }}</NuxtLink>
       </div>
       <div class="grid justify-center grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-6 text-primary">
         <CategoryCard v-for="(category, i) in productCategories" :key="i" class="w-full" :node="category" />
@@ -75,7 +75,7 @@ useSeoMeta({
     <section class="container my-16" v-if="popularProducts">
       <div class="flex items-end justify-between">
         <h2 class="text-lg font-semibold md:text-2xl text-primary">{{ $t('messages.shop.popularProducts') }}</h2>
-        <NuxtLink class="text-primary" to="/products">{{ $t('messages.general.viewAll') }}</NuxtLink>
+        <NuxtLink class="text-primary" :to="$localePath('/products')">{{ $t('messages.general.viewAll') }}</NuxtLink>
       </div>
       <ProductRow :products="popularProducts" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-8" />
     </section>
