@@ -27,6 +27,11 @@ const isSimpleProduct = computed<boolean>(() => product.value?.type === ProductT
 const isVariableProduct = computed<boolean>(() => product.value?.type === ProductTypesEnum.VARIABLE);
 const isExternalProduct = computed<boolean>(() => product.value?.type === ProductTypesEnum.EXTERNAL);
 
+// Computed properties for locale-aware product data
+const productName = computed(() => local_product.value?.name || product.value?.name);
+const productDescription = computed(() => local_product.value?.description || product.value?.description);
+const productShortDescription = computed(() => local_product.value?.shortDescription || product.value?.shortDescription);
+
 const type = computed(() => activeVariation.value || product.value);
 const selectProductInput = computed<any>(() => ({ productId: type.value?.databaseId, quantity: quantity.value })) as ComputedRef<AddToCartInput>;
 
@@ -48,28 +53,12 @@ const productQuery = `
       sku
       description
       shortDescription
-      ... on SimpleProduct {
-        price
-        regularPrice
-        salePrice
-      }
-      ... on VariableProduct {
-        price
-        regularPrice
-        salePrice
-      }
-      ... on ExternalProduct {
-        price
-        regularPrice
-        salePrice
-        externalUrl
-      }
     }
   }
 `;
 
 // Move locale query execution to onMounted to avoid top-level await issues
-let localeData = ref(null);
+let local_product = ref(null);
 
 onMounted(async () => {
   try {
@@ -85,8 +74,20 @@ onMounted(async () => {
     const { data } = await localeQuery(productQuery, {
       variables: { sku: product.value.sku },
     });
-    localeData.value = data;
-    console.log('localeData', localeData.value);
+    local_product.value = data.product;
+    console.log('Locale product data:', local_product.value);
+    console.log('Data source comparison:', {
+      name: {
+        main: product.value?.name,
+        local: local_product.value?.name,
+        using: local_product.value?.name || product.value?.name,
+      },
+      description: {
+        main: product.value?.description?.substring(0, 50) + '...',
+        local: local_product.value?.description?.substring(0, 50) + '...',
+        using: (local_product.value?.description || product.value?.description)?.substring(0, 50) + '...',
+      },
+    });
   } catch (error: any) {
     console.error('Locale query error:', error);
   }
@@ -151,7 +152,7 @@ const disabledAddToCart = computed(() => {
           <div class="flex justify-between mb-4">
             <div class="flex-1">
               <h1 class="flex flex-wrap items-center gap-2 mb-2 text-2xl font-sesmibold text-[#C1C6E3]">
-                {{ type.name }}
+                {{ productName }}
                 <LazyWPAdminLink :link="`/wp-admin/post.php?post=${product.databaseId}&action=edit`">Edit</LazyWPAdminLink>
               </h1>
               <StarRating :rating="product.averageRating || 0" :count="product.reviewCount || 0" v-if="storeSettings.showReviews" />
@@ -170,7 +171,7 @@ const disabledAddToCart = computed(() => {
             </div>
           </div>
 
-          <div class="mb-8 font-light prose prose-invert text-[#C1C6E3]" v-html="product.shortDescription || product.description" />
+          <div class="mb-8 font-light prose prose-invert text-[#C1C6E3]" v-html="productShortDescription || productDescription" />
 
           <hr />
 
@@ -228,7 +229,7 @@ const disabledAddToCart = computed(() => {
         </div>
       </div>
       <div v-if="product.description || product.reviews" class="my-32">
-        <ProductTabs :product />
+        <ProductTabs :product :local_product />
       </div>
       <div class="my-32" v-if="product.related && storeSettings.showRelatedProducts">
         <div class="mb-4 text-xl font-semibold text-[#C1C6E3]">{{ $t('messages.shop.youMayLike') }}</div>

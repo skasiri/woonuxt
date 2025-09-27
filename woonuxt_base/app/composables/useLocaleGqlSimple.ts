@@ -108,7 +108,7 @@ export const useLocaleGqlSimple = () => {
                 data: error.data,
                 url: endpoint
             })
-            
+
             const gqlError: LocaleGqlError = new Error(error.message || 'Unknown error')
             gqlError.gqlErrors = error.gqlErrors || [{ message: error.message }]
             throw gqlError

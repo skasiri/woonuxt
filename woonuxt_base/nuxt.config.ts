@@ -8,16 +8,16 @@ const GQL_HOST = process.env.GQL_HOST || 'http://localhost:4000/graphql';
 const APP_HOST = process.env.APP_HOST || 'http://localhost:3000';
 
 // Locale-specific GraphQL endpoints
-const LOCALE_GQL_EN_ENDPOINT = process.env.LOCALE_GQL_EN_ENDPOINT || 'http://localhost:4001/graphql';
-const LOCALE_GQL_RU_ENDPOINT = process.env.LOCALE_GQL_RU_ENDPOINT || 'http://localhost:4002/graphql';
-const LOCALE_GQL_AR_ENDPOINT = process.env.LOCALE_GQL_AR_ENDPOINT || 'http://localhost:4003/graphql';
-const LOCALE_GQL_DE_ENDPOINT = process.env.LOCALE_GQL_DE_ENDPOINT || 'http://localhost:4004/graphql';
-const LOCALE_GQL_ES_ENDPOINT = process.env.LOCALE_GQL_ES_ENDPOINT || 'http://localhost:4005/graphql';
-const LOCALE_GQL_FR_ENDPOINT = process.env.LOCALE_GQL_FR_ENDPOINT || 'http://localhost:4006/graphql';
-const LOCALE_GQL_IT_ENDPOINT = process.env.LOCALE_GQL_IT_ENDPOINT || 'http://localhost:4007/graphql';
-const LOCALE_GQL_PT_ENDPOINT = process.env.LOCALE_GQL_PT_ENDPOINT || 'http://localhost:4008/graphql';
-const LOCALE_GQL_FA_ENDPOINT = process.env.LOCALE_GQL_FA_ENDPOINT || 'http://localhost:4009/graphql';
-const LOCALE_GQL_DEFAULT_ENDPOINT = process.env.LOCALE_GQL_DEFAULT_ENDPOINT || 'http://localhost:4001/graphql';
+const LOCALE_GQL_EN_ENDPOINT = process.env.LOCALE_GQL_EN_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_RU_ENDPOINT = process.env.LOCALE_GQL_RU_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_AR_ENDPOINT = process.env.LOCALE_GQL_AR_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_DE_ENDPOINT = process.env.LOCALE_GQL_DE_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_ES_ENDPOINT = process.env.LOCALE_GQL_ES_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_FR_ENDPOINT = process.env.LOCALE_GQL_FR_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_IT_ENDPOINT = process.env.LOCALE_GQL_IT_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_PT_ENDPOINT = process.env.LOCALE_GQL_PT_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_FA_ENDPOINT = process.env.LOCALE_GQL_FA_ENDPOINT || GQL_HOST;
+const LOCALE_GQL_DEFAULT_ENDPOINT = process.env.LOCALE_GQL_DEFAULT_ENDPOINT || GQL_HOST;
 
 export default defineNuxtConfig({
   // @ts-ignore

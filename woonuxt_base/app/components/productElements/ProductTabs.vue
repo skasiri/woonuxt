@@ -1,25 +1,39 @@
 <script setup lang="ts">
-const { product } = defineProps({
-  product: { type: Object as PropType<Product>, required: true },
-});
-const { storeSettings } = useAppConfig();
+import { computed, ref } from 'vue';
+import type { PropType } from 'vue';
 
-const initialTab = product.description ? 0 : 1;
+interface Product {
+  description?: string;
+  reviewCount?: number;
+}
+
+const { product, local_product } = defineProps({
+  product: { type: Object as PropType<Product>, required: true },
+  local_product: { type: Object as PropType<Product>, required: false },
+});
+// Get store settings (assuming useAppConfig is available globally in Nuxt)
+const { storeSettings } = (globalThis as any).useAppConfig?.() || { storeSettings: { showReviews: true } };
+
+// Computed properties for locale-aware product data
+const productDescription = computed(() => local_product?.description || product.description);
+const productReviewCount = computed(() => local_product?.reviewCount || product.reviewCount);
+
+const initialTab = productDescription.value ? 0 : 1;
 const show = ref(initialTab);
 </script>
 
 <template>
   <div>
     <nav class="border-b flex gap-8 tabs">
-      <button v-if="product.description" type="button" :class="show === 0 ? 'active' : ''" @click.prevent="show = 0">
+      <button v-if="productDescription" type="button" :class="show === 0 ? 'active' : ''" @click.prevent="show = 0">
         {{ $t('messages.shop.productDescription') }}
       </button>
       <button v-if="storeSettings.showReviews" type="button" :class="show === 1 ? 'active' : ''" @click.prevent="show = 1">
-        {{ $t('messages.shop.reviews') }} ({{ product.reviewCount }})
+        {{ $t('messages.shop.reviews') }} ({{ productReviewCount }})
       </button>
     </nav>
     <div class="tab-contents">
-      <div v-if="show === 0 && product.description" class="font-light mt-8 prose prose-invert text-[#C1C6E3]" v-html="product.description" />
+      <div v-if="show === 0 && productDescription" class="font-light mt-8 prose prose-invert text-[#C1C6E3]" v-html="productDescription" />
       <ProductReviews v-if="show === 1" :product="product" />
     </div>
   </div>
