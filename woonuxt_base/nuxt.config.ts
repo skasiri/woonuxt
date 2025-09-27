@@ -7,7 +7,20 @@ const { resolve } = createResolver(import.meta.url);
 const GQL_HOST = process.env.GQL_HOST || 'http://localhost:4000/graphql';
 const APP_HOST = process.env.APP_HOST || 'http://localhost:3000';
 
+// Locale-specific GraphQL endpoints
+const LOCALE_GQL_EN_ENDPOINT = process.env.LOCALE_GQL_EN_ENDPOINT || 'http://localhost:4001/graphql';
+const LOCALE_GQL_RU_ENDPOINT = process.env.LOCALE_GQL_RU_ENDPOINT || 'http://localhost:4002/graphql';
+const LOCALE_GQL_AR_ENDPOINT = process.env.LOCALE_GQL_AR_ENDPOINT || 'http://localhost:4003/graphql';
+const LOCALE_GQL_DE_ENDPOINT = process.env.LOCALE_GQL_DE_ENDPOINT || 'http://localhost:4004/graphql';
+const LOCALE_GQL_ES_ENDPOINT = process.env.LOCALE_GQL_ES_ENDPOINT || 'http://localhost:4005/graphql';
+const LOCALE_GQL_FR_ENDPOINT = process.env.LOCALE_GQL_FR_ENDPOINT || 'http://localhost:4006/graphql';
+const LOCALE_GQL_IT_ENDPOINT = process.env.LOCALE_GQL_IT_ENDPOINT || 'http://localhost:4007/graphql';
+const LOCALE_GQL_PT_ENDPOINT = process.env.LOCALE_GQL_PT_ENDPOINT || 'http://localhost:4008/graphql';
+const LOCALE_GQL_FA_ENDPOINT = process.env.LOCALE_GQL_FA_ENDPOINT || 'http://localhost:4009/graphql';
+const LOCALE_GQL_DEFAULT_ENDPOINT = process.env.LOCALE_GQL_DEFAULT_ENDPOINT || 'http://localhost:4001/graphql';
+
 export default defineNuxtConfig({
+  // @ts-ignore
   compatibilityDate: '2025-08-10',
 
   app: {
@@ -30,7 +43,7 @@ export default defineNuxtConfig({
         host: GQL_HOST,
         corsOptions: { mode: 'cors', credentials: 'include' },
         headers: { Origin: APP_HOST },
-      },
+      }
     },
   },
 
@@ -58,6 +71,24 @@ export default defineNuxtConfig({
       '/checkout/order-received/**': { prerender: false },
       '/order-summary/**': { prerender: false },
     },
+  },
+
+  // Runtime config for environment variables
+  runtimeConfig: {
+    public: {
+      localeGqlEndpoints: {
+        en: LOCALE_GQL_EN_ENDPOINT,
+        ru: LOCALE_GQL_RU_ENDPOINT,
+        ar: LOCALE_GQL_AR_ENDPOINT,
+        de: LOCALE_GQL_DE_ENDPOINT,
+        es: LOCALE_GQL_ES_ENDPOINT,
+        fr: LOCALE_GQL_FR_ENDPOINT,
+        it: LOCALE_GQL_IT_ENDPOINT,
+        pt: LOCALE_GQL_PT_ENDPOINT,
+        fa: LOCALE_GQL_FA_ENDPOINT,
+        default: LOCALE_GQL_DEFAULT_ENDPOINT,
+      }
+    }
   },
 
   // Multilingual support

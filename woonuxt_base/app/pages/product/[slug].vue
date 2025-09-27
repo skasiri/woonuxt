@@ -6,6 +6,8 @@ const { storeSettings } = useAppConfig();
 const { arraysEqual, formatArray, checkForVariationTypeOfAny } = useHelpers();
 const { addToCart, isUpdatingCart } = useCart();
 const { t } = useI18n();
+const { localeQuery } = useLocaleGqlSimple();
+
 const slug = route.params.slug as string;
 
 const { data } = await useAsyncGql('getProduct', { slug });
@@ -38,6 +40,37 @@ const mergeLiveStockStatus = (payload: Product): void => {
   });
 };
 
+// Example: Execute a custom GraphQL query on locale-specific endpoint
+const productQuery = `
+  query getProductBySku($sku: ID!) {
+    product(id: $sku, idType: SKU) {
+      name
+      sku
+      description
+      shortDescription
+      ... on SimpleProduct {
+        price
+        regularPrice
+        salePrice
+      }
+      ... on VariableProduct {
+        price
+        regularPrice
+        salePrice
+      }
+      ... on ExternalProduct {
+        price
+        regularPrice
+        salePrice
+        externalUrl
+      }
+    }
+  }
+`;
+
+// Move locale query execution to onMounted to avoid top-level await issues
+let localeData = ref(null);
+
 onMounted(async () => {
   try {
     const { product } = await GqlGetStockStatus({ slug });
@@ -45,6 +78,17 @@ onMounted(async () => {
   } catch (error: any) {
     const errorMessage = error?.gqlErrors?.[0].message;
     if (errorMessage) console.error(errorMessage);
+  }
+
+  // Execute locale-specific query
+  try {
+    const { data } = await localeQuery(productQuery, {
+      variables: { sku: product.value.sku },
+    });
+    localeData.value = data;
+    console.log('localeData', localeData.value);
+  } catch (error: any) {
+    console.error('Locale query error:', error);
   }
 });
 
